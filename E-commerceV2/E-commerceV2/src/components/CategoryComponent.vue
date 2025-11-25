@@ -56,6 +56,7 @@ export default {
   padding: 10px;
   transition: all 0.5s ease;
   background-color: v-bind(bgColor);
+  overflow: visible;
 }
 
 .container:hover {
@@ -143,6 +144,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+}
+
+.small-card-content img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 10px;
 }
 
 .count {

@@ -76,6 +76,7 @@ export default {
   padding: 20px;
   position: relative;
   transition: all 0.5s ease;
+  overflow: visible;
 }
 
 .product-card:hover {
@@ -100,6 +101,7 @@ export default {
   height: 200px;
   object-fit: contain;
   margin: 10px 0;
+  display: block;
 }
 
 .product-body {

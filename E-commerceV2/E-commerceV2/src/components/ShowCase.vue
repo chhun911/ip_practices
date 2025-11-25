@@ -41,7 +41,7 @@ export default {
     </div>
     
     <div class="showcase-image">
-      <img src="https://raw.githubusercontent.com/chhun911/ip_practices/refs/heads/main/grocery_basket.png" alt="Grocery Basket" />
+      <img src="@/assets/grocery_basket.jpg" alt="Grocery Basket" />
     </div>
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background-image: 
     url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="%23E8F5E9"/></svg>'),
     linear-gradient(135deg, #FFF5E6 0%, #FFF9F0 100%);
@@ -141,7 +141,12 @@ export default {
 .showcase-image img {
   width: 450px;
   height: auto;
+  max-height: 450px;
   object-fit: contain;
+  border-radius: 10px;
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  display: block;
 }
 
 @media (max-width: 1024px) {
