@@ -1,7 +1,10 @@
 <script>
-import CategoryComponent from './components/CategoryComponent.vue'
-import ProductCart from './components/ProductCart.vue'
-import { useProductStore } from './stores/product'
+import HeaderComponent from '../components/HeaderComponent.vue'
+import MenuBar from '../components/MenuBar.vue'
+import ShowCase from '../components/ShowCase.vue'
+import CategoryComponent from '../components/CategoryComponent.vue'
+import ProductCart from '../components/ProductCart.vue'
+import { useProductStore } from '../stores/product'
 const burgerImage = new URL('@/assets/burger.png', import.meta.url).href
 const peachImage = new URL('@/assets/peach.png', import.meta.url).href
 const kiwiImage = new URL('@/assets/kiwi.png', import.meta.url).href
@@ -17,7 +20,7 @@ const strawberryImage = new URL('@/assets/strawberry.png', import.meta.url).href
 const vegsImage = new URL('@/assets/vegs.jpg', import.meta.url).href
 
 export default {
-  name: 'App',
+  name: 'HomeView',
   data() {
     return {
       burgerImage,
@@ -33,6 +36,7 @@ export default {
       onionImage,
       strawberryImage,
       vegsImage,
+      categoryFilter: 'All'
     }
   },
   setup() {
@@ -45,6 +49,9 @@ export default {
     await this.productStore.fetchProducts()
   },
   components: {
+    HeaderComponent,
+    MenuBar,
+    ShowCase,
     CategoryComponent,
     ProductCart,
   },
@@ -52,18 +59,29 @@ export default {
 </script>
 
 <template>
-  <h1 class="header">
-    <span>Feature Categories</span>
-    <span class = "MenuBar">
-      <span>All</span>
-      <span>Milks & Dairies</span>
-      <span>Coffes & Teas</span>
-      <span>Pet Foods</span>
-      <span>Meats</span>
-      <span>Vegetables</span>
-      <span>Fruits</span>
-    </span>
-  </h1>
+  <div class="home-view">
+    <!-- Header -->
+    <HeaderComponent />
+    
+    <!-- Menu Bar -->
+    <MenuBar />
+    
+    <!-- Showcase / Hero Banner -->
+    <ShowCase />
+
+    <!-- Featured Categories Section -->
+    <div class="section-header">
+      <h2 class="section-title">Featured Categories</h2>
+      <div class="category-tabs">
+        <span :class="['tab', { active: categoryFilter === 'All' }]" @click="categoryFilter = 'All'">All</span>
+        <span :class="['tab', { active: categoryFilter === 'Milks & Dairies' }]" @click="categoryFilter = 'Milks & Dairies'">Milks & Dairies</span>
+        <span :class="['tab', { active: categoryFilter === 'Coffes & Teas' }]" @click="categoryFilter = 'Coffes & Teas'">Coffes & Teas</span>
+        <span :class="['tab', { active: categoryFilter === 'Pet Foods' }]" @click="categoryFilter = 'Pet Foods'">Pet Foods</span>
+        <span :class="['tab', { active: categoryFilter === 'Meats' }]" @click="categoryFilter = 'Meats'">Meats</span>
+        <span :class="['tab', { active: categoryFilter === 'Vegetables' }]" @click="categoryFilter = 'Vegetables'">Vegetables</span>
+        <span :class="['tab', { active: categoryFilter === 'Fruits' }]" @click="categoryFilter = 'Fruits'">Fruits</span>
+      </div>
+    </div>
   <div class="category-wrapper">
     <CategoryComponent
       title="Burget&Cake"
@@ -131,18 +149,20 @@ export default {
       :is-big="true"
     />
   </div>
-    <h1 class="header">
-    <span>Popular Products</span>
-    <span class = "MenuBar">
-      <span>All</span>
-      <span>Milks & Dairies</span>
-      <span>Coffes & Teas</span>
-      <span>Pet Foods</span>
-      <span>Meats</span>
-      <span>Vegetables</span>
-      <span>Fruits</span>
-    </span>
-  </h1>
+
+    <!-- Popular Products Section -->
+    <div class="section-header">
+      <h2 class="section-title">Popular Products</h2>
+      <div class="category-tabs">
+        <span class="tab active">All</span>
+        <span class="tab">Milks & Dairies</span>
+        <span class="tab">Coffes & Teas</span>
+        <span class="tab">Pet Foods</span>
+        <span class="tab">Meats</span>
+        <span class="tab">Vegetables</span>
+        <span class="tab">Fruits</span>
+      </div>
+    </div>
   <div class="category-wrapper">
 <ProductCart
   v-for="category in productStore.getProductsWithBadges"
@@ -158,53 +178,89 @@ export default {
   :color="category.color"
 />
   </div>
+  </div>
 </template>
 
 <style scoped>
+.home-view {
+  background: #f4f5f7;
+  min-height: 100vh;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 40px 20px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #253D4E;
+  margin: 0;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 30px;
+}
+
+.tab {
+  font-size: 16px;
+  color: #7E7E7E;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 5px 0;
+}
+
+.tab:hover,
+.tab.active {
+  color: #3BB77E;
+  font-weight: 600;
+}
+
 .category-wrapper {
   display: flex;
   flex-direction: row;
   gap: 15px;
   flex-wrap: wrap;
-  padding: 40px;
+  padding: 20px 40px 40px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .category-wrapper_big {
-  padding: 40px;
+  padding: 20px 40px 40px 40px;
   display: flex;
   flex-direction: row;
   gap: 25px;
-  max-width: 1200px;
+  max-width: 1440px;
+  margin: 0 auto;
   flex-wrap: wrap;
-}
-
-.header {
-  padding: 40px;
-}
-
-.MenuBar {
-  margin-bottom: 30px;
-  margin-left: 30%;
-  font-size: 16px;
-  justify-content: space-between;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.MenuBar span {
-  margin-left: 20px;
-  animation: pulse 1s infinite;
-  cursor: pointer;
-}
-
-.MenuBar span:hover {
-  text-decoration: underline;
-  color: rgb(216, 40, 40);
 }
 
 @media (max-width: 768px) {
   .category-wrapper,
   .category-wrapper_big {
     flex-direction: column;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .category-tabs {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  .section-title {
+    font-size: 24px;
   }
 }
 </style>
