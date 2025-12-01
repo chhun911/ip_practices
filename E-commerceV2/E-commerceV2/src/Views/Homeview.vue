@@ -88,46 +88,53 @@ export default {
       :product-count="12"
       :image="burgerImage"
       bg-color="#70ff44ff"
+      :categoryId="1"
     />
-    <CategoryComponent title="Peach" :product-count="13" :image="peachImage" bg-color="#FFFCEB" />
+    <CategoryComponent title="Peach" :product-count="13" :image="peachImage" bg-color="#FFFCEB" :categoryId="2" />
     <CategoryComponent
       title="Organic Wiki"
       :product-count="13"
       :image="kiwiImage"
       bg-color="#88ff88ff"
+      :categoryId="3"
     />
     <CategoryComponent
       title="Red Apple"
       :product-count="14"
       :image="appleImage"
       bg-color="#ffaa8dff"
+      :categoryId="4"
     />
-    <CategoryComponent title="Snack" :product-count="34" :image="snackImage" bg-color="#FFF3EB" />
+    <CategoryComponent title="Snack" :product-count="34" :image="snackImage" bg-color="#FFF3EB" :categoryId="5" />
     <CategoryComponent
       title="Black Plum"
       :product-count="15"
       :image="blackplumImage"
       bg-color="#ffb7ffff"
+      :categoryId="6"
     />
     <CategoryComponent
       title="Vegetables"
       :product-count="16"
       :image="vegImage"
       bg-color="#cdff88ff"
+      :categoryId="7"
     />
     <CategoryComponent
       title="Headphone"
       :product-count="17"
       :image="headphoneImage"
       bg-color="#ffe341ff"
+      :categoryId="8"
     />
     <CategoryComponent
       title="Cake & Milk"
       :product-count="18"
       :image="cakemilkImage"
       bg-color="#e4ffbfff"
+      :categoryId="9"
     />
-    <CategoryComponent title="Orange" :product-count="22" :image="orangeImage" bg-color="#FFF3FF" />
+    <CategoryComponent title="Orange" :product-count="22" :image="orangeImage" bg-color="#FFF3FF" :categoryId="10" />
   </div>
   <div class="category-wrapper_big">
     <CategoryComponent
@@ -167,6 +174,7 @@ export default {
 <ProductCart
   v-for="category in productStore.getProductsWithBadges"
   :key="category.id"
+  :productId="category.id"
   :title="category.name"
   :image="'http://localhost:3000/' + category.image"
   :brand="category.brand"

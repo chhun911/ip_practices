@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="goToProduct">
     <div v-if="parsedDiscount !== null && parsedDiscount !== undefined && parsedDiscount > 0" class="discount-label">
       -{{ parsedDiscount }}%
     </div>
@@ -32,9 +32,12 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'ProductCart',
   props: {
+    productId: { type: [Number, String], default: null },
     title: { type: String, default: 'Product Title' },
     image: { type: String, default: '' },
     brand: { type: String, default: 'Hodo Foods' },
@@ -44,6 +47,19 @@ export default {
     weight: { type: [Number, String], default: '500 gram' },
     discount: { type: [Number, String], default: null },
     color: { type: String, default: '' },
+  },
+  setup(props) {
+    const router = useRouter()
+    
+    const goToProduct = () => {
+      if (props.productId) {
+        router.push({ name: 'product', params: { productId: props.productId } })
+      }
+    }
+    
+    return {
+      goToProduct
+    }
   },
   computed: {
     stars() {
@@ -60,7 +76,8 @@ export default {
     },
   },
   methods: {
-    addToCart() {
+    addToCart(e) {
+      e.stopPropagation()
       this.$emit('add-to-cart')
     },
   },
@@ -82,6 +99,7 @@ export default {
 .product-card:hover {
   border-color: #3bb77e;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .discount-label {

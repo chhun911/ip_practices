@@ -4,14 +4,14 @@ export default {
   data() {
     return {
       menuItems: [
-        { name: 'Hot Deals', icon: '🔥', highlight: true },
-        { name: 'Home' },
-        { name: 'Food' },
-        { name: 'Vegetables' },
-        { name: 'Drink' },
-        { name: 'Cookies' },
-        { name: 'Meat & Seafood' },
-        { name: 'Bakery' }
+        { name: 'Hot Deals', icon: '🔥', highlight: true, path: '/' },
+        { name: 'Home', path: '/' },
+        { name: 'Food', path: '/' },
+        { name: 'Vegetables', path: '/categories/7' },
+        { name: 'Drink', path: '/' },
+        { name: 'Cookies', path: '/' },
+        { name: 'Meat & Seafood', path: '/' },
+        { name: 'Bakery', path: '/' }
       ]
     }
   }
@@ -32,15 +32,15 @@ export default {
       </button>
       
       <div class="menu-items">
-        <a 
+        <RouterLink 
           v-for="(item, index) in menuItems" 
           :key="index" 
           :class="['menu-item', { 'hot-deals': item.highlight }]"
-          href="#"
+          :to="item.path"
         >
           <span v-if="item.icon" class="menu-icon">{{ item.icon }}</span>
           {{ item.name }}
-        </a>
+        </RouterLink>
       </div>
     </div>
   </nav>

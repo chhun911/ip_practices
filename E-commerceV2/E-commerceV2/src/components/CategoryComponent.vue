@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'container': !isBig, 'container_big': isBig }">
+  <div :class="{ 'container': !isBig, 'container_big': isBig }" @click="handleClick">
     <div v-if="isBig" class="big-card-content">
       <div class="text-content">
         <h2>{{ title }}</h2>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'CategoryComponent',
   props: {
@@ -41,8 +43,25 @@ export default {
     isBig: {
       type: Boolean,
       default: false,
+    },
+    categoryId: {
+      type: [Number, String],
+      default: null
     }
   },
+  setup(props) {
+    const router = useRouter()
+    
+    const handleClick = () => {
+      if (props.categoryId) {
+        router.push({ name: 'category', params: { categoryId: props.categoryId } })
+      }
+    }
+    
+    return {
+      handleClick
+    }
+  }
 }
 </script>
 

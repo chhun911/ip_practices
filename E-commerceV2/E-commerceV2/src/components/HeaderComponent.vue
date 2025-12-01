@@ -13,13 +13,13 @@ export default {
   <header class="header-container">
     <div class="header-content">
       <!-- Logo -->
-      <div class="logo">
+      <RouterLink to="/" class="logo">
         <img src="@/assets/melon_logo.jpg" alt="Melon Logo" class="logo-img" />
         <div class="logo-text">
           <span class="logo-title">Melon</span>
           <span class="logo-subtitle">MART & GROCERY</span>
         </div>
-      </div>
+      </RouterLink>
 
       <!-- Search Box -->
       <div class="search-box">
@@ -103,6 +103,8 @@ export default {
   align-items: center;
   gap: 10px;
   margin-right: 20px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .logo-img {
