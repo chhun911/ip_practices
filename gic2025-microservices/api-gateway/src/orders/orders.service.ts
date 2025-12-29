@@ -1,9 +1,15 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { PaymentsService } from 'src/payments/payments.service';
+import { NotificationsService } from 'src/notifications/notification.service';
 
 @Injectable()
 export class OrdersService implements OnModuleInit {
-  constructor(@Inject('ORDERS_SERVICE') private readonly client: ClientProxy) {}
+  constructor(
+    @Inject('ORDERS_SERVICE') private readonly client: ClientProxy,
+    private readonly paymentsService: PaymentsService,
+    private readonly notifications: NotificationsService, 
+  ) {}
 
   async onModuleInit() {
     try {
@@ -16,7 +22,13 @@ export class OrdersService implements OnModuleInit {
 
   createOrder(orderDto: any) {
     console.log('Emitting order_created');
-    this.client.emit('order_created', orderDto);
+    this.client.emit('order_created', { order: orderDto, createdAt: new Date().toISOString() });
+
+    this.notifications.notify('orders', 'order_created', {
+      order: orderDto,
+      createdAt: new Date().toISOString(),
+    });
+
     return { status: 'Order accepted', order: orderDto };
   }
 

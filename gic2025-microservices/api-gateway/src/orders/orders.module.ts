@@ -1,10 +1,18 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
+import { PaymentsModule } from 'src/payments/payments.module';
+import { NotificationModule } from 'src/notifications/notification.module';
 
 @Module({
   imports: [
+    forwardRef(() => PaymentsModule),
+    NotificationModule.forFeature({
+      featureName: 'orders',
+      prefix: '[ORDERS]',
+      channels: ['log', 'telegram'],
+    }),
     ClientsModule.register([
       {
         name: 'ORDERS_SERVICE',
@@ -19,5 +27,6 @@ import { OrdersService } from './orders.service';
   ],
   controllers: [OrdersController],
   providers: [OrdersService],
+  exports: [OrdersService],
 })
 export class OrdersModule {}
