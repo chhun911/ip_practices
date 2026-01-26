@@ -1,0 +1,62 @@
+# ========================================
+# Schema-First GraphQL Schema
+# E-Commerce: Category + Product
+# ========================================
+
+# Category type - represents a product category
+type Category {
+  id: ID!
+  name: String!
+  description: String
+}
+
+# Product type - represents a product in the store
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  sku: String!
+  description: String
+  stock: Int!
+  categoryId: ID!
+  # Relation field - resolved by ProductResolver
+  category: Category
+}
+
+# ========================================
+# Queries - Read operations
+# ========================================
+type Query {
+  # Get all categories
+  categories: [Category!]!
+  
+  # Get a single category by ID
+  category(id: ID!): Category
+  
+  # Get all products
+  products: [Product!]!
+  
+  # Get a single product by ID
+  product(id: ID!): Product
+  
+  # Get products by category ID
+  productsByCategory(categoryId: ID!): [Product!]!
+}
+
+# ========================================
+# Mutations - Write operations
+# ========================================
+type Mutation {
+  # Create a new category
+  createCategory(name: String!, description: String): Category!
+  
+  # Create a new product
+  createProduct(
+    name: String!
+    price: Float!
+    sku: String!
+    categoryId: ID!
+    description: String
+    stock: Int
+  ): Product!
+}
